@@ -1,213 +1,225 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bell, CheckSquare, Menu, Plus, Search, User, LogOut, Settings } from "lucide-react";
-
-import { useAuth } from "@/contexts/AuthContext";
-import { useTasks } from "@/contexts/TasksContext";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useSidebar } from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
-
+// --- START: ICON & TOOLTIP IMPORTS (Mic added) ---
+import {
+  Search, Command, User, Settings, LogOut, Menu, X,
+  LayoutDashboard, CheckSquare, Users, Calendar, NotebookText, BarChart3, Mic
+} from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+// --- END: ICON & TOOLTIP IMPORTS ---
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { EnhancedNotificationBell } from "@/components/common/EnhancedNotificationBell";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useAuth } from "@/contexts/AuthContext";
+import { useSidebar } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
+
+// --- START: UPDATED NAVIGATION LINKS (Meetly added) ---
+const navLinks = [
+  { href: "/tasks", label: "Tasks", icon: <CheckSquare className="h-5 w-5" /> },
+  { href: "/team-chat", label: "Team Chat", icon: <Users className="h-5 w-5" /> },
+  { href: "/meetly", label: "Meetly", icon: <Mic className="h-5 w-5" /> },
+  { href: "/calendar", label: "Calendar", icon: <Calendar className="h-5 w-5" /> },
+  { href: "/notes", label: "Notes", icon: <NotebookText className="h-5 w-5" /> },
+  { href: "/analytics", label: "Analytics", icon: <BarChart3 className="h-5 w-5" /> },
+];
+// --- END: UPDATED NAVIGATION LINKS ---
 
 export function PremiumHeader() {
   const { user, userProfile, signOutUser } = useAuth();
-  const { tasks } = useTasks();
-  const { toggleSidebar, isMobile: sidebarIsMobile } = useSidebar();
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
+  const { state } = useSidebar();
   const location = useLocation();
+  const navigate = useNavigate();
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const getPageTitle = () => {
+    const path = location.pathname;
+    const pageMap: { [key: string]: string } = {
+      "/": "Dashboard",
+      "/tasks": "Tasks",
+      "/timer": "Timer",
+      "/chat": "AI Assistant",
+      "/team-chat": "Team Chat",
+      "/meetly": "Meetly",
+      "/calendar": "Calendar",
+      "/notes": "Notes",
+      "/analytics": "Analytics",
+      "/profile": "Profile",
+    };
+    return pageMap[path] || "Dashboard";
+  };
 
-  const notifications = tasks.filter(task => 
-    task.status === "in-progress" || 
-    (task.dueDate && new Date(task.dueDate) <= new Date(Date.now() + 24 * 60 * 60 * 1000))
-  );
-
-  const handleSignOut = async () => {
-    try {
-      await signOutUser();
-      navigate("/signin");
-    } catch (error) {
-      console.error("Error signing out:", error);
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      console.log("Searching for:", searchQuery);
     }
   };
 
-  const navItems = [
-    { to: "/", label: "Today", exact: true },
-    { to: "/tasks", label: "Tasks" },
-    { to: "/calendar", label: "Calendar" },
-    { to: "/analytics", label: "Analytics" },
-  ];
-
-  const getPageTitle = () => {
-    const currentPath = location.pathname;
-    if (currentPath === "/") return "Today";
-    if (currentPath === "/tasks") return "Tasks";
-    if (currentPath === "/calendar") return "Calendar";
-    if (currentPath === "/analytics") return "Analytics";
-    return "Taskly";
+  const getInitials = (name?: string, email?: string) => {
+    if (name && name.trim()) {
+      return name.split(' ').map(word => word[0]).join('').toUpperCase().slice(0, 2);
+    }
+    if (email) {
+      return email.split('@')[0].slice(0, 2).toUpperCase();
+    }
+    return "U";
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-4">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 pt-safe">
+      <div className="flex h-14 items-center px-4">
         {/* Left Section */}
         <div className="flex items-center gap-4">
-          {isMobile && (
-            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon-sm" className="md:hidden">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[280px] sm:w-[300px]">
-                <SheetHeader>
-                  <SheetTitle className="flex items-center gap-2">
-                    <CheckSquare className="h-5 w-5 text-primary" />
-                    Taskly
-                  </SheetTitle>
-                </SheetHeader>
-                <nav className="flex flex-col gap-2 mt-6">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                        location.pathname === item.to
-                          ? "bg-primary text-primary-foreground"
-                          : "hover:bg-accent hover:text-accent-foreground"
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-              </SheetContent>
-            </Sheet>
-          )}
-
-          <Link to="/" className="flex items-center gap-2 font-semibold">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <CheckSquare className="h-4 w-4 text-primary-foreground" />
-            </div>
-            {!isMobile && <span className="text-lg">Taskly</span>}
-          </Link>
-
-          {isMobile && (
-            <h1 className="text-lg font-semibold text-foreground">
-              {getPageTitle()}
-            </h1>
-          )}
+          <SidebarTrigger className="flex items-center justify-center h-8 w-8 rounded-lg border border-border bg-background hover:bg-accent transition-colors">
+            {state === "expanded" ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
+          </SidebarTrigger>
+          
+          <div className="hidden md:flex items-center gap-2 text-sm">
+            <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              Workspace
+            </Link>
+            <span className="text-muted-foreground">/</span>
+            <span className="font-medium">{getPageTitle()}</span>
+          </div>
         </div>
 
-        {/* Desktop Navigation */}
-        {!isMobile && (
-          <nav className="flex items-center gap-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={cn(
-                  "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  location.pathname === item.to
-                    ? "bg-primary/10 text-primary font-semibold"
-                    : "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
-                )}
-              >
-                {item.label}
-              </Link>
+        {/* Center Icon Navigation for Desktop */}
+        <TooltipProvider delayDuration={0}>
+          <nav className="hidden md:flex items-center gap-1 ml-6">
+            {navLinks.map((link) => (
+              <Tooltip key={link.href}>
+                <TooltipTrigger asChild>
+                  <Link
+                    to={link.href}
+                    aria-label={link.label}
+                    className={cn(
+                      "flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-accent",
+                      location.pathname.startsWith(link.href)
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {link.icon}
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{link.label}</p>
+                </TooltipContent>
+              </Tooltip>
             ))}
           </nav>
-        )}
+        </TooltipProvider>
 
-        {/* Right Section */}
-        <div className="flex items-center gap-2">
-          {/* Quick Add Button - Desktop */}
-          {!isMobile && (
-            <Button 
-              variant="premium" 
-              size="sm" 
-              onClick={() => navigate("/tasks")}
-              className="gap-2"
-            >
-              <Plus className="h-4 w-4" />
-              New Task
-            </Button>
-          )}
+        {/* Right Section Group (pushed to the right) */}
+        <div className="ml-auto flex items-center gap-4">
+          {/* Search Bar */}
+          <div className="w-full max-w-xs">
+            <Popover open={searchOpen} onOpenChange={setSearchOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start text-sm text-muted-foreground hover:bg-muted"
+                >
+                  <Search className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">Search everything...</span>
+                  <span className="sm:hidden">Search...</span>
+                  <div className="ml-auto hidden sm:flex items-center gap-1">
+                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 text-[10px] font-medium text-muted-foreground opacity-100">
+                      <Command className="h-3 w-3" />
+                      K
+                    </kbd>
+                  </div>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-96 p-0" align="center">
+                <form onSubmit={handleSearch} className="p-4">
+                  <div className="flex items-center gap-2">
+                    <Search className="h-4 w-4 text-muted-foreground" />
+                    <Input
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search tasks, notes, messages..."
+                      className="border-0 shadow-none focus-visible:ring-0"
+                      autoFocus
+                    />
+                  </div>
+                </form>
+              </PopoverContent>
+            </Popover>
+          </div>
 
-          {/* Notifications */}
-          <Button variant="ghost" size="icon-sm" className="relative">
-            <Bell className="h-4 w-4" />
-            {notifications.length > 0 && (
-              <Badge 
-                variant="destructive" 
-                className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
-              >
-                {notifications.length}
-              </Badge>
-            )}
-          </Button>
-
-          {/* User Profile */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={userProfile?.photoURL || ""} alt={userProfile?.displayName || ""} />
-                  <AvatarFallback className="bg-primary/10 text-primary text-sm">
-                    {userProfile?.displayName?.charAt(0) || user?.email?.charAt(0) || "U"}
-                  </AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end" forceMount>
-              <DropdownMenuLabel className="font-normal">
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">
-                    {userProfile?.displayName || "User"}
-                  </p>
-                  <p className="text-xs leading-none text-muted-foreground">
-                    {user?.email}
-                  </p>
+          {/* User Actions */}
+          <div className="flex items-center gap-2">
+            <EnhancedNotificationBell />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={userProfile?.photoURL || user?.photoURL || ""} />
+                    <AvatarFallback className="text-xs bg-primary/10 text-primary">
+                      {getInitials(userProfile?.displayName, user?.email)}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <div className="flex items-center justify-start gap-2 p-2">
+                  <div className="flex flex-col space-y-1 leading-none">
+                    {userProfile?.displayName && (
+                      <p className="font-medium">{userProfile.displayName}</p>
+                    )}
+                    {user?.email && (
+                      <p className="w-[200px] truncate text-sm text-muted-foreground">
+                        {user.email}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigate("/profile")}>
-                <User className="mr-2 h-4 w-4" />
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleSignOut}>
-                <LogOut className="mr-2 h-4 w-4" />
-                Sign out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={signOutUser}
+                  className="text-destructive focus:text-destructive"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </header>

@@ -133,26 +133,24 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4">
+      <div className="w-full max-w-md space-y-6">
         {/* Logo and Brand */}
-        <div className="text-center space-y-4 animate-fade-in">
+        <div className="text-center space-y-2 animate-fade-in">
           <div className="flex justify-center">
-            <div className="h-16 w-16 rounded-2xl bg-primary shadow-elegant flex items-center justify-center">
-              <CheckSquare className="h-8 w-8 text-primary-foreground" />
+            <div className="gradient-primary h-16 w-16 rounded-2xl flex items-center justify-center shadow-glow">
+              <CheckSquare className="h-8 w-8 text-white" />
             </div>
           </div>
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-foreground">
-              Taskly
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Your premium task manager
-            </p>
-          </div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-focus bg-clip-text text-transparent">
+            Taskly
+          </h1>
+          <p className="text-muted-foreground">
+            Smart Task Management
+          </p>
         </div>
 
-        <Card className="shadow-large border-0 bg-card/50 backdrop-blur-sm animate-scale-in">
+        <Card className="shadow-elegant animate-scale-in">
           <CardHeader>
             <CardTitle className="text-center text-xl">Welcome Back</CardTitle>
           </CardHeader>
@@ -214,7 +212,7 @@ export default function SignInPage() {
                       </Button>
                     </div>
 
-                    <Button type="submit" className="w-full" disabled={loading} variant="premium" size="lg">
+                    <Button type="submit" className="w-full" disabled={loading} variant="focus">
                       {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Sign In"}
                     </Button>
                   </form>
