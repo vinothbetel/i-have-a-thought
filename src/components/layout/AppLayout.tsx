@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import { useLocation } from "react-router-dom"
 import { SidebarProvider, useSidebar } from "@/components/ui/sidebar"
 import { AppSidebar } from "./AppSidebar"
-import { PremiumHeader } from "./PremiumHeader"
+import { ModernHeader } from "./ModernHeader"
 import { TimerProvider, useTimer } from "@/contexts/TimerContext"
 import { FloatingTimer } from "@/components/timer/FloatingTimer"
 import { TimeTrackingWidget } from "@/components/timer/TimeTrackingWidget"
@@ -25,11 +25,8 @@ function AppLayoutContent({ children }: AppLayoutProps) {
   console.log('AppLayout - isChatOpenMobile:', isChatOpenMobile, 'isMobile:', isMobile)
 
   return (
-    <div 
-      className="h-screen flex flex-col w-full overflow-hidden bg-gradient-to-br from-background via-background to-muted/20"
-      style={{ "--app-header-offset": "3.5rem" } as React.CSSProperties}
-    >
-      <PremiumHeader />
+    <div className="h-screen flex flex-col w-full overflow-hidden bg-gradient-subtle">
+      <ModernHeader />
       <OfflineIndicator />
       
       <div className="flex flex-1 overflow-hidden">
@@ -40,8 +37,8 @@ function AppLayoutContent({ children }: AppLayoutProps) {
         )} />
         
         <main className={cn(
-          "flex-1 transition-smooth overflow-y-auto min-h-0 touch-pan-y relative min-w-0", // <-- THE FIX IS HERE
-          "pt-0",
+          "flex-1 transition-smooth overflow-y-auto min-h-0 touch-pan-y relative min-w-0",
+          "pt-0 pb-safe", // Add mobile safe area padding
           isTimerRunning && "md:ml-0",
           isMobile && location.pathname === "/" && "scrollbar-hide"
         )}>

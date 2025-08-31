@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { rtdb, db } from '@/lib/firebase';
 import { ref, onChildAdded, off, query, orderByChild, limitToLast } from 'firebase/database';
 import { unifiedNotificationService } from '@/lib/unifiedNotificationService';
-import { collection, where, onSnapshot, Unsubscribe } from 'firebase/firestore';
+import { collection, where, onSnapshot, Unsubscribe, query as firestoreQuery } from 'firebase/firestore';
 import { Capacitor } from '@capacitor/core';
 import { getSafeNotificationId } from '@/lib/notificationId'; // Import the new helper
 
@@ -39,7 +39,7 @@ export function ChatMessageNotifier() {
     unifiedNotificationService.init();
 
     // Firestore listener for chat rooms the user is a participant in
-    const chatRoomsQuery = query(
+    const chatRoomsQuery = firestoreQuery(
       collection(db, 'chatRooms'),
       where('participants', 'array-contains', user.uid)
     );
@@ -133,8 +133,7 @@ export function ChatMessageNotifier() {
                     senderId: message.senderId,
                     chatRoomId: chatRoomId,
                   },
-                  requireInteraction: false,
-                  vibrate: [100, 50, 100]
+                  requireInteraction: false
                 });
               }
             }

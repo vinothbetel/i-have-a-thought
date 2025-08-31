@@ -96,8 +96,7 @@ export function TaskAssignmentNotifier() {
                   taskId: task.id,
                   type: 'task_assignment'
                 },
-                requireInteraction: true,
-                vibrate: [200, 100, 200]
+                requireInteraction: true
               });
             }
           } catch (error) {
