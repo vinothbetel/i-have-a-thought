@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import { useLocation } from "react-router-dom"
 import { SidebarProvider, useSidebar } from "@/components/ui/sidebar"
 import { AppSidebar } from "./AppSidebar"
-import { ModernHeader } from "./ModernHeader"
+import { PremiumHeader } from "./PremiumHeader"
 import { TimerProvider, useTimer } from "@/contexts/TimerContext"
 import { FloatingTimer } from "@/components/timer/FloatingTimer"
 import { TimeTrackingWidget } from "@/components/timer/TimeTrackingWidget"
@@ -26,7 +26,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
 
   return (
     <div className="h-screen flex flex-col w-full overflow-hidden bg-gradient-subtle">
-      <ModernHeader />
+      <PremiumHeader />
       <OfflineIndicator />
       
       <div className="flex flex-1 overflow-hidden">

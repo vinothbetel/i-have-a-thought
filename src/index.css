@@ -19,84 +19,84 @@
   background-size: 16px 16px, 24px 24px;
 }
 
-/* Modern Task Management App Design System - Enhanced for mobile with Capacitor safe areas
-All colors MUST be HSL. Inspired by modern productivity apps like Blitzit, Linear, and Notion.
+/* Rich Blitzit-Inspired Design System - Premium Aesthetic
+Sophisticated color palette with subtle gradients and premium shadows.
 */
 
 @layer base {
   :root {
-    /* Enhanced Color Palette - Light Mode */
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Sophisticated Color Palette - Light Mode */
+    --background: 0 0% 99%;
+    --foreground: 220 15% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 15% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 15% 12%;
 
-    /* Primary Brand Colors - Modern Blue */
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 98%;
-    --primary-light: 217 91% 70%;
-    --primary-dark: 217 91% 50%;
+    /* Refined Brand Colors - Subtle Professional Blue */
+    --primary: 220 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 220 100% 60%;
+    --primary-dark: 220 100% 40%;
 
-    /* Secondary Colors - Subtle grays */
-    --secondary: 210 40% 98%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    /* Sophisticated Secondary Colors */
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 15% 12%;
 
-    /* Muted Colors - Clean grays */
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Premium Muted Colors */
+    --muted: 220 10% 94%;
+    --muted-foreground: 220 8% 45%;
 
-    /* Accent Colors */
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
+    /* Elegant Accent Colors */
+    --accent: 220 15% 92%;
+    --accent-foreground: 220 15% 12%;
 
-    /* Status Colors - Modern vibrant */
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
+    /* Refined Status Colors */
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --success: 142 69% 58%;
-    --success-foreground: 0 0% 98%;
+    --success: 142 65% 45%;
+    --success-foreground: 0 0% 100%;
 
-    --warning: 38 100% 67%;
-    --warning-foreground: 0 0% 98%;
+    --warning: 38 95% 55%;
+    --warning-foreground: 0 0% 100%;
 
-    --info: 199 89% 64%;
-    --info-foreground: 0 0% 98%;
+    --info: 200 80% 50%;
+    --info-foreground: 0 0% 100%;
 
-    /* Focus & Timer Colors */
-    --focus: 217 91% 60%;
-    --focus-foreground: 0 0% 98%;
-    --break: 25 95% 65%;
-    --break-foreground: 0 0% 98%;
+    /* Premium Focus & Timer Colors */
+    --focus: 220 100% 50%;
+    --focus-foreground: 0 0% 100%;
+    --break: 25 85% 55%;
+    --break-foreground: 0 0% 100%;
 
-    /* Border & Input */
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 217 91% 60%;
+    /* Subtle Borders & Inputs */
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 220 100% 50%;
 
-    /* Modern Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 70%) 50%, hsl(250 91% 75%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(210 40% 98%) 0%, hsl(210 40% 96%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(250 91% 75%) 50%, hsl(280 91% 80%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 40% 99%) 100%);
+    /* Sophisticated Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 100% 50%) 0%, hsl(220 100% 60%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(220 10% 98%) 0%, hsl(220 10% 96%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(220 10% 97%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220 100% 50%) 0%, hsl(240 100% 60%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 10% 99%) 100%);
 
-    /* Modern Shadows */
-    --shadow-elegant: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-    --shadow-medium: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-large: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
-    --shadow-glow: 0 0 20px hsl(217 91% 60% / 0.15);
-    --shadow-focus: 0 0 0 3px hsl(217 91% 60% / 0.1);
+    /* Premium Shadows */
+    --shadow-elegant: 0 1px 3px 0 hsl(220 15% 0% / 0.08), 0 1px 2px -1px hsl(220 15% 0% / 0.06);
+    --shadow-medium: 0 4px 8px -2px hsl(220 15% 0% / 0.1), 0 2px 4px -2px hsl(220 15% 0% / 0.06);
+    --shadow-large: 0 10px 25px -5px hsl(220 15% 0% / 0.15), 0 4px 6px -4px hsl(220 15% 0% / 0.1);
+    --shadow-glow: 0 0 30px hsl(220 100% 50% / 0.15);
+    --shadow-focus: 0 0 0 3px hsl(220 100% 50% / 0.12);
 
-    /* Animation & Transitions */
+    /* Smooth Animations */
     --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Modern Spacing & Sizing */
+    /* Refined Spacing & Sizing */
     --radius: 0.75rem;
     --radius-sm: 0.5rem;
     --radius-lg: 1rem;
@@ -114,71 +114,71 @@ All colors MUST be HSL. Inspired by modern productivity apps like Blitzit, Linea
   }
 
   .dark {
-    /* Enhanced Dark Mode */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Sophisticated Dark Mode */
+    --background: 220 20% 4%;
+    --foreground: 220 10% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 20% 6%;
+    --card-foreground: 220 10% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 20% 6%;
+    --popover-foreground: 220 10% 95%;
 
-    /* Primary Brand Colors - Dark theme optimized */
-    --primary: 217 91% 60%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --primary-light: 217 91% 70%;
-    --primary-dark: 217 91% 50%;
+    /* Refined Dark Brand Colors */
+    --primary: 220 100% 60%;
+    --primary-foreground: 220 20% 4%;
+    --primary-light: 220 100% 70%;
+    --primary-dark: 220 100% 50%;
 
-    /* Secondary Colors - Dark theme grays */
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Premium Dark Secondary Colors */
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 220 10% 95%;
 
-    /* Muted Colors - Dark sophisticated grays */
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Elegant Dark Muted Colors */
+    --muted: 220 15% 10%;
+    --muted-foreground: 220 8% 65%;
 
-    /* Accent Colors */
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    /* Sophisticated Dark Accent Colors */
+    --accent: 220 15% 12%;
+    --accent-foreground: 220 10% 95%;
 
-    /* Status Colors - Dark mode optimized */
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    /* Refined Dark Status Colors */
+    --destructive: 0 65% 60%;
+    --destructive-foreground: 220 10% 95%;
 
-    --success: 142 69% 58%;
-    --success-foreground: 210 40% 98%;
+    --success: 142 65% 55%;
+    --success-foreground: 220 10% 95%;
 
-    --warning: 38 92% 50%;
-    --warning-foreground: 210 40% 98%;
+    --warning: 38 95% 65%;
+    --warning-foreground: 220 20% 4%;
 
-    --info: 199 89% 48%;
-    --info-foreground: 210 40% 98%;
+    --info: 200 80% 60%;
+    --info-foreground: 220 20% 4%;
 
-    /* Focus & Timer Colors */
-    --focus: 217 91% 60%;
-    --focus-foreground: 210 40% 98%;
-    --break: 25 95% 53%;
-    --break-foreground: 210 40% 98%;
+    /* Premium Dark Focus Colors */
+    --focus: 220 100% 60%;
+    --focus-foreground: 220 20% 4%;
+    --break: 25 85% 65%;
+    --break-foreground: 220 20% 4%;
 
-    /* Border & Input - Dark theme */
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 217 91% 60%;
+    /* Subtle Dark Borders */
+    --border: 220 15% 15%;
+    --input: 220 15% 15%;
+    --ring: 220 100% 60%;
 
-    /* Dark Mode Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 70%) 50%, hsl(250 91% 75%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(217.2 32.6% 17.5%) 0%, hsl(217.2 32.6% 20%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(222.2 84% 4.9%) 0%, hsl(217.2 32.6% 8%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(250 91% 75%) 50%, hsl(280 91% 80%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(222.2 84% 4.9%) 0%, hsl(217.2 32.6% 10%) 100%);
+    /* Sophisticated Dark Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 100% 60%) 0%, hsl(220 100% 70%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(220 15% 12%) 0%, hsl(220 15% 15%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(220 20% 4%) 0%, hsl(220 15% 8%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220 100% 60%) 0%, hsl(240 100% 70%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 20% 6%) 0%, hsl(220 15% 10%) 100%);
 
-    /* Dark Mode Shadows */
-    --shadow-elegant: 0 1px 3px 0 hsl(0 0% 0% / 0.3), 0 1px 2px -1px hsl(0 0% 0% / 0.3);
-    --shadow-medium: 0 4px 6px -1px hsl(0 0% 0% / 0.3), 0 2px 4px -2px hsl(0 0% 0% / 0.3);
-    --shadow-large: 0 10px 15px -3px hsl(0 0% 0% / 0.3), 0 4px 6px -4px hsl(0 0% 0% / 0.3);
-    --shadow-glow: 0 0 20px hsl(217 91% 60% / 0.3);
-    --shadow-focus: 0 0 0 3px hsl(217 91% 60% / 0.2);
+    /* Premium Dark Shadows */
+    --shadow-elegant: 0 1px 3px 0 hsl(0 0% 0% / 0.4), 0 1px 2px -1px hsl(0 0% 0% / 0.3);
+    --shadow-medium: 0 4px 8px -2px hsl(0 0% 0% / 0.4), 0 2px 4px -2px hsl(0 0% 0% / 0.3);
+    --shadow-large: 0 10px 25px -5px hsl(0 0% 0% / 0.5), 0 4px 6px -4px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 30px hsl(220 100% 60% / 0.25);
+    --shadow-focus: 0 0 0 3px hsl(220 100% 60% / 0.2);
 
     /* Sidebar dark colors */
     --sidebar-background: 222.2 84% 4.9%;
@@ -261,8 +261,7 @@ All colors MUST be HSL. Inspired by modern productivity apps like Blitzit, Linea
 
   body {
     @apply bg-background text-foreground antialiased;
-    background: var(--gradient-subtle);
-    background-attachment: fixed;
+    background: hsl(var(--background));
     min-height: 100vh;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -271,6 +270,8 @@ All colors MUST be HSL. Inspired by modern productivity apps like Blitzit, Linea
     -webkit-text-size-adjust: 100%;
     /* Ensure proper mobile rendering */
     touch-action: manipulation;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -0.01em;
   }
 
   /* Selection styling */

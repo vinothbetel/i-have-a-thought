@@ -168,16 +168,24 @@ export default function DashboardPage() {
     );
   }
 
-  const StatCard = ({ title, value, icon: Icon, colorClass, bgColorClass }: any) => (
+  const StatCard = ({ title, value, icon: Icon, trend, trendLabel }: any) => (
     <motion.div variants={itemVariants}>
-      <Card className="shadow-elegant overflow-hidden">
-        <CardContent className="p-4 flex items-center justify-between">
-          <div>
-            <p className="text-xs sm:text-sm font-medium text-muted-foreground">{title}</p>
-            <p className={cn("text-xl sm:text-2xl font-bold", colorClass)}>{value}</p>
-          </div>
-          <div className={cn("h-10 w-10 sm:h-12 sm:w-12 rounded-lg flex items-center justify-center", bgColorClass)}>
-            <Icon className={cn("h-5 w-5 sm:h-6 sm:w-6", colorClass)} />
+      <Card className="shadow-elegant border-0 bg-card/80 backdrop-blur-sm hover:shadow-medium transition-all duration-200 group">
+        <CardContent className="p-6">
+          <div className="flex items-start justify-between">
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-muted-foreground">{title}</p>
+              <p className="text-2xl font-bold text-foreground">{value}</p>
+              {trend && (
+                <div className="flex items-center gap-1 text-xs">
+                  <TrendingUp className="h-3 w-3 text-success" />
+                  <span className="text-muted-foreground">{trendLabel}</span>
+                </div>
+              )}
+            </div>
+            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <Icon className="h-5 w-5 text-primary" />
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -215,33 +223,48 @@ export default function DashboardPage() {
   return (
     <>
       <div className="container max-w-7xl mx-auto p-4 md:p-6 space-y-6">
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold">Dashboard</h1>
-              <p className="text-sm text-muted-foreground">Welcome back, {userProfile?.displayName || user?.email}!</p>
-            </div>
-            {!isMobile && (
-              <Button onClick={() => setShowForm(true)} variant="focus" className="hover-scale">
-                <Plus className="h-4 w-4 mr-2" /> New Task
-              </Button>
-            )}
+        {/* Premium Header */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mb-8">
+          <div className="text-center space-y-3">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+              Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'}
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              {userProfile?.displayName?.split(' ')[0] || user?.email?.split('@')[0]}
+            </p>
           </div>
         </motion.div>
 
-        {/* Statistics & Streaks Grid */}
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard title="Total Tasks" value={totalTasks} icon={Target} colorClass="text-primary" bgColorClass="bg-primary/10" />
-          <StatCard title="Completed" value={completedTasks} icon={CheckCircle} colorClass="text-success" bgColorClass="bg-success/10" />
-          <StatCard title="Active Tasks" value={activeTasks} icon={Clock} colorClass="text-focus" bgColorClass="bg-focus/10" />
-          <StatCard title="Completion Rate" value={`${completionRate}%`} icon={TrendingUp} colorClass="text-break" bgColorClass="bg-break/10" />
-          <motion.div variants={itemVariants} className="col-span-2 sm:col-span-1 lg:col-span-2">
-            <Card className="shadow-elegant"><CardContent className="p-4 flex items-center justify-between"><div className="space-y-1"><p className="text-xs sm:text-sm font-medium text-muted-foreground">Current Streak</p><p className="text-xl sm:text-2xl font-bold text-orange-500">{currentStreak} {currentStreak === 1 ? 'day' : 'days'}</p></div><div className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg flex items-center justify-center bg-orange-500/10"><Flame className="h-5 w-5 sm:h-6 sm:w-6 text-orange-500" /></div></CardContent></Card>
-          </motion.div>
-          <motion.div variants={itemVariants} className="col-span-2 sm:col-span-1 lg:col-span-2">
-            <Card className="shadow-elegant"><CardContent className="p-4 flex items-center justify-between"><div className="space-y-1"><p className="text-xs sm:text-sm font-medium text-muted-foreground">Longest Streak</p><p className="text-xl sm:text-2xl font-bold text-purple-500">{longestStreak} {longestStreak === 1 ? 'day' : 'days'}</p></div><div className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg flex items-center justify-center bg-purple-500/10"><Award className="h-5 w-5 sm:h-6 sm:w-6 text-purple-500" /></div></CardContent></Card>
-          </motion.div>
+        {/* Premium Statistics Grid */}
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <StatCard 
+            title="Total Tasks" 
+            value={totalTasks} 
+            icon={Target} 
+            trend={totalTasks > 0}
+            trendLabel="All time"
+          />
+          <StatCard 
+            title="Completed" 
+            value={completedTasks} 
+            icon={CheckCircle} 
+            trend={completedTasks > 0}
+            trendLabel="This month"
+          />
+          <StatCard 
+            title="In Progress" 
+            value={activeTasks} 
+            icon={Clock} 
+            trend={activeTasks > 0}
+            trendLabel="Active now"
+          />
+          <StatCard 
+            title="Success Rate" 
+            value={`${completionRate}%`} 
+            icon={TrendingUp} 
+            trend={completionRate > 0}
+            trendLabel="This week"
+          />
         </motion.div>
 
         {!isMobile && (

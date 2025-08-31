@@ -18,13 +18,12 @@ export function ModernFloatingActionButton() {
         onOpenChange={setIsDialogOpen}
       >
         <Button
-          size="icon"
+          size="icon-lg"
+          variant="premium"
           className={cn(
-            "fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-large z-50",
-            "gradient-primary text-white hover:shadow-glow transition-smooth",
-            "touch-target pb-safe",
-            // Add safe area consideration
-            "mb-safe"
+            "fixed bottom-6 right-6 h-16 w-16 rounded-2xl shadow-large z-50",
+            "hover:shadow-glow transition-all duration-200 hover:scale-105 active:scale-95",
+            "touch-target pb-safe mb-safe"
           )}
           onClick={() => setIsDialogOpen(true)}
         >

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { TaskCard } from "@/components/tasks/TaskCard"
+import { PremiumTaskCard } from "@/components/tasks/PremiumTaskCard"
 import { MobileTaskCard } from "@/components/tasks/MobileTaskCard"
 import { TaskForm } from "@/components/tasks/TaskForm"
 import { FloatingActionButton } from "@/components/tasks/FloatingActionButton"
@@ -244,21 +245,20 @@ export default function TasksPage() {
 
             ) : (
               /* ==================================================================== */
-              /* ================= DESKTOP UI LAYOUT (Unchanged) ================== */
+              /* ================= PREMIUM DESKTOP UI LAYOUT ====================== */
               /* ==================================================================== */
-              <div className="p-4 md:p-6">
-                <div className={cn("text-center space-y-2 mb-6")}>
-                    <h1 className={cn("font-bold bg-gradient-to-r from-primary to-focus bg-clip-text text-transparent text-3xl md:text-4xl")}>
-                        My Day
-                    </h1>
-                    <p className={cn("text-muted-foreground text-base md:text-lg")}>
-                        {new Date().toLocaleDateString('en-US', { 
-                        weekday: 'long', 
-                        month: 'long', 
-                        day: 'numeric',
-                        year: 'numeric'
-                        })}
-                    </p>
+              <div className="p-6 md:p-8 max-w-6xl mx-auto">
+                <div className="text-center space-y-4 mb-8">
+                  <h1 className="text-4xl font-bold text-foreground tracking-tight">
+                    Today's Focus
+                  </h1>
+                  <p className="text-lg text-muted-foreground">
+                    {new Date().toLocaleDateString('en-US', { 
+                      weekday: 'long', 
+                      month: 'long', 
+                      day: 'numeric'
+                    })}
+                  </p>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 min-h-0">
                   {/* Active Tasks Column */}
@@ -289,7 +289,7 @@ export default function TasksPage() {
                           </div>
                         ) : (
                           todoTasks.map(task => (
-                            <TaskCard
+                            <PremiumTaskCard
                               key={task.id}
                               task={task}
                               onEdit={setEditingTask}
