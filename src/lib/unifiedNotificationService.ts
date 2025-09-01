@@ -133,8 +133,7 @@ class UnifiedNotificationService {
               type: payload.type
             },
             requireInteraction: payload.requireInteraction || false,
-            silent: payload.silent || false,
-            vibrate: [200, 100, 200]
+            silent: payload.silent || false
           });
         }
       }

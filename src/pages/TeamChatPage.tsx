@@ -167,7 +167,7 @@ export default function TeamChatPage() {
       await push(messagesRef, messageData);
       const chatRoomInfoRef = ref(rtdb, `chatRooms/${chatRoomId}`);
       push(chatRoomInfoRef, { participants: [user.uid, selectedUser.uid], lastActivity: serverTimestamp(), lastMessage: messageData }).catch(e => console.warn(e));
-      notificationService.addInAppNotification(selectedUser.uid, `New message from ${messageData.senderName}`, messageData.message.substring(0, 50), 'chat', { chatRoomId, senderId: user.uid, senderName: messageData.senderName }).catch(e => console.warn(e));
+      notificationService.addInAppNotification(selectedUser.uid, `New message from ${messageData.senderName}`, messageData.message.substring(0, 50), 'general', { chatRoomId, senderId: user.uid, senderName: messageData.senderName }).catch(e => console.warn(e));
     } catch (error) {
       console.error("Error sending message:", error);
       setNewMessage(messageContent);

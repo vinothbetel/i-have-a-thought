@@ -4,7 +4,27 @@ const config: CapacitorConfig = {
   appId: 'com.lovable.dwellingcare',
   appName: 'dwelling-care-daily',
   webDir: 'dist',
+  server: {
+    url: 'https://a373b916-7ca4-41ad-a714-0ee81412b3ef.lovableproject.com?forceHideBadge=true',
+    cleartext: true
+  },
   plugins: {
+    StatusBar: {
+      style: 'dark',
+      backgroundColor: '#ffffff'
+    },
+    Keyboard: {
+      resize: 'body',
+      style: 'dark'
+    },
+    Haptics: {
+      impactMedium: true,
+      impactLight: true,
+      impactHeavy: true,
+      notificationSuccess: true,
+      notificationWarning: true,
+      notificationError: true
+    },
     LocalNotifications: {
       smallIcon: 'ic_stat_icon_config_sample',
       iconColor: '#488AFF',

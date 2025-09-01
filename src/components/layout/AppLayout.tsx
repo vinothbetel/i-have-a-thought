@@ -10,6 +10,7 @@ import { TeamChatProvider } from "@/contexts/TeamChatContext"
 import { OfflineIndicator } from "@/components/common/OfflineIndicator"
 import { PerformanceMonitor } from "@/components/performance/PerformanceMonitor"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { MobileSafeAreaLayout } from "@/components/mobile/MobileSafeAreaLayout"
 import { cn } from "@/lib/utils"
 
 interface AppLayoutProps {
@@ -25,10 +26,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
   console.log('AppLayout - isChatOpenMobile:', isChatOpenMobile, 'isMobile:', isMobile)
 
   return (
-    <div 
-      className="h-screen flex flex-col w-full overflow-hidden bg-gradient-to-br from-background via-background to-muted/20"
-      style={{ "--app-header-offset": "3.5rem" } as React.CSSProperties}
-    >
+    <MobileSafeAreaLayout className="h-screen flex flex-col w-full overflow-hidden bg-gradient-to-br from-background via-background to-muted/20">
       <PremiumHeader />
       <OfflineIndicator />
       
@@ -40,7 +38,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
         )} />
         
         <main className={cn(
-          "flex-1 transition-smooth overflow-y-auto min-h-0 touch-pan-y relative min-w-0", // <-- THE FIX IS HERE
+          "flex-1 transition-smooth overflow-y-auto min-h-0 touch-pan-y relative min-w-0 pb-safe",
           "pt-0",
           isTimerRunning && "md:ml-0",
           isMobile && location.pathname === "/" && "scrollbar-hide"
@@ -52,7 +50,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
       <FloatingTimer />
       <TimeTrackingWidget />
       <PerformanceMonitor />
-    </div>
+    </MobileSafeAreaLayout>
   )
 }
 

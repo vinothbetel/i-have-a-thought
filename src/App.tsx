@@ -43,7 +43,9 @@ import { MeetlyContextProvider } from "@/contexts/MeetlyContext";
 // Notification Services & Setup
 import { setGlobalAddNotification } from "./lib/notifications";
 import { createNotificationChannel } from './hooks/useNotificationPermission';
-import { getSafeNotificationId } from './lib/notificationId'; // Import the new helper
+import { getSafeNotificationId } from './lib/notificationId';
+import { SafeAreaProvider } from "./components/mobile/SafeAreaProvider";
+import { Button } from "./components/ui/button";
 
 // Lazy load page components
 const TasksPage = lazy(() => import("./pages/TasksPage"));
@@ -376,31 +378,45 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="text-center space-y-4">
+            <h1 className="text-2xl font-bold text-foreground">Something went wrong</h1>
+            <p className="text-muted-foreground">Please refresh the page to continue.</p>
+            <Button onClick={() => window.location.reload()} variant="outline">
+              Refresh Page
+            </Button>
+          </div>
+        </div>
+      }
+    >
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <AuthContextProvider>
-              <NotificationsContextProvider>
-                <TasksContextProvider>
-                  <TeamChatProvider>
-                    <CommentsContextProvider>
-                      <TaskTimeTrackerProvider>
-                        <MeetlyContextProvider>
-                          <BrowserRouter>
-                            <AppContent />
-                          </BrowserRouter>
-                        </MeetlyContextProvider>
-                      </TaskTimeTrackerProvider>
-                    </CommentsContextProvider>
-                  </TeamChatProvider>
-                </TasksContextProvider>
-              </NotificationsContextProvider>
-            </AuthContextProvider>
-          </TooltipProvider>
-        </ThemeProvider>
+        <SafeAreaProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <AuthContextProvider>
+                <NotificationsContextProvider>
+                  <TasksContextProvider>
+                    <TeamChatProvider>
+                      <CommentsContextProvider>
+                        <TaskTimeTrackerProvider>
+                          <MeetlyContextProvider>
+                            <BrowserRouter>
+                              <AppContent />
+                            </BrowserRouter>
+                          </MeetlyContextProvider>
+                        </TaskTimeTrackerProvider>
+                      </CommentsContextProvider>
+                    </TeamChatProvider>
+                  </TasksContextProvider>
+                </NotificationsContextProvider>
+              </AuthContextProvider>
+            </TooltipProvider>
+          </ThemeProvider>
+        </SafeAreaProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );
