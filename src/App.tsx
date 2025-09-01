@@ -46,9 +46,9 @@ import { createNotificationChannel } from './hooks/useNotificationPermission';
 import { getSafeNotificationId } from './lib/notificationId';
 import { Button } from "./components/ui/button";
 
-// Lazy load page components
+// Import page components directly
+import DashboardPage from "./pages/DashboardPage";
 const TasksPage = lazy(() => import("./pages/TasksPage"));
-const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const TeamChatPage = lazy(() => import("./pages/TeamChatPage"));
 const MeetlyPage = lazy(() => import("./pages/MeetlyPage"));
 const TimerPage = lazy(() => import("./pages/TimerPage"));
