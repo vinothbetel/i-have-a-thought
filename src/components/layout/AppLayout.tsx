@@ -10,7 +10,7 @@ import { TeamChatProvider } from "@/contexts/TeamChatContext"
 import { OfflineIndicator } from "@/components/common/OfflineIndicator"
 import { PerformanceMonitor } from "@/components/performance/PerformanceMonitor"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { MobileSafeAreaLayout } from "@/components/mobile/MobileSafeAreaLayout"
+import { SafeArea } from "@/components/mobile/SimpleSafeArea"
 import { cn } from "@/lib/utils"
 
 interface AppLayoutProps {
@@ -26,7 +26,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
   console.log('AppLayout - isChatOpenMobile:', isChatOpenMobile, 'isMobile:', isMobile)
 
   return (
-    <MobileSafeAreaLayout className="h-screen flex flex-col w-full overflow-hidden bg-gradient-to-br from-background via-background to-muted/20">
+    <SafeArea className="h-screen flex flex-col w-full overflow-hidden bg-gradient-to-br from-background via-background to-muted/20">
       <PremiumHeader />
       <OfflineIndicator />
       
@@ -38,7 +38,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
         )} />
         
         <main className={cn(
-          "flex-1 transition-smooth overflow-y-auto min-h-0 touch-pan-y relative min-w-0 pb-safe",
+          "flex-1 transition-smooth overflow-y-auto min-h-0 touch-pan-y relative min-w-0",
           "pt-0",
           isTimerRunning && "md:ml-0",
           isMobile && location.pathname === "/" && "scrollbar-hide"
@@ -50,7 +50,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
       <FloatingTimer />
       <TimeTrackingWidget />
       <PerformanceMonitor />
-    </MobileSafeAreaLayout>
+    </SafeArea>
   )
 }
 
